@@ -19,12 +19,11 @@ mercurial:
   cmd.run:
     - name: make install
     - cwd: /tmp/mercurial-{{version}}
-    - unless:
-      - test -f /usr/local/bin/hg
-      - '[ "$(hg --version | head -n 1 | grep -o "version [0-9.]\+" | cut -d " " -f 2)" = "{{version}}" ]'
     - require:
       - archive: mercurial
       - pkg: mercurial-dependencies
+    - onchanges:
+      - archive: mercurial
   file.copy:
     - name: /usr/local/bin/hg-ssh
     - source: /tmp/mercurial-{{version}}/contrib/hg-ssh
