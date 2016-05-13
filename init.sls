@@ -2,9 +2,10 @@
 mercurial:
   archive.extracted:
     - name: /tmp
-    - source:
-      - salt://mercurial/store/mercurial-{{version}}.tar.gz
-      - http://mercurial.selenic.com/release/mercurial-{{version}}.tar.gz
+    - source: http://mercurial.selenic.com/release/mercurial-{{version}}.tar.gz
+    # - source:
+    #   - salt://mercurial/store/mercurial-{{version}}.tar.gz
+    #   - http://mercurial.selenic.com/release/mercurial-{{version}}.tar.gz
     - source_hash: sha1=a77ddd9640600c8901d0a870f525a660fa6251fa
     - archive_format: tar
     - if_missing: /tmp/mercurial-{{version}}
