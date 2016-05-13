@@ -21,12 +21,14 @@
 # Blank lines and lines starting with a '#' are ignored.
 # 
 
-
 perms_file="/var/lib/hg/permissions"
 
 [ -r "$perms_file" ] || exit 0
 
 trim () { for i in "$@"; do echo -n " $i"; done | grep -o '[^[:space:]].*' | grep -o '.*[^[:space:]]'; }
+
+# die gracefully when we are killed with SIGPIPE once the key is found
+trap "exit 0" PIPE
 
 global_perms=""
 while IFS=: read user perms key; do
