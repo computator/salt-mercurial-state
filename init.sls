@@ -1,4 +1,4 @@
-{% set version = '3.8.1' %}
+{% set version = salt['pillar.get']("mercurial:lookup:version", '3.8.4') %}
 mercurial:
   archive.extracted:
     - name: /tmp
@@ -9,8 +9,7 @@ mercurial:
     - archive_format: tar
     - if_missing: /tmp/mercurial-{{version}}
     - unless:
-      - test -f /usr/local/bin/hg
-      - '[ "$(hg --version | head -n 1 | grep -o "version [0-9.]\+" | cut -d " " -f 2)" = "{{version}}" ]'
+      - 'test -f /usr/local/bin/hg && [ "$(hg --version | head -n 1 | grep -o "version [0-9.]\+" | cut -d " " -f 2)" = "{{version}}" ]'
   pkg.installed:
     - name: mercurial-dependencies
     - pkgs:
@@ -25,8 +24,7 @@ mercurial:
       - archive: mercurial
       - pkg: mercurial-dependencies
     - unless:
-      - test -f /usr/local/bin/hg
-      - '[ "$(hg --version | head -n 1 | grep -o "version [0-9.]\+" | cut -d " " -f 2)" = "{{version}}" ]'
+      - 'test -f /usr/local/bin/hg && [ "$(hg --version | head -n 1 | grep -o "version [0-9.]\+" | cut -d " " -f 2)" = "{{version}}" ]'
   file.copy:
     - name: /usr/local/bin/hg-ssh
     - source: /tmp/mercurial-{{version}}/contrib/hg-ssh
