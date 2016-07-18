@@ -43,3 +43,15 @@ mercurial-ssh-auth-script:
     - source: salt://mercurial/auth_handler.sh
     - mode: 755
     - makedirs: true
+
+mercurial-ssh-auth-template:
+  file.managed:
+    - name: /var/lib/hg/permissions
+    - contents: |
+        # Format:
+        #     <user>:<repos>:<key>
+        # See /usr/local/lib/hg/authorized_keys_handler.sh for detailed documentation.
+    - user: hg
+    - group: hg
+    - mode: 644
+    - replace: false
