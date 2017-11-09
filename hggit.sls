@@ -6,3 +6,10 @@ mercurial-hggit-extension:
     - name: hg-git
     - require:
       - pkg: python-pip
+  file.managed:
+    - name: /etc/mercurial/hgrc.d/hggit.rc
+    - contents: |
+        [extensions]
+        hggit =
+    - require:
+      - pip: hg-git
