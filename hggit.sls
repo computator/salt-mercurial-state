@@ -11,5 +11,6 @@ mercurial-hggit-extension:
     - contents: |
         [extensions]
         hggit =
+    - makedirs: true
     - require:
       - pip: hg-git
