@@ -21,9 +21,9 @@
 # Blank lines and lines starting with a '#' are ignored.
 # 
 
-perms_file="/var/lib/hg/permissions"
+PERMS_FILE="/etc/mercurial/server-perms.conf"
 
-[ -r "$perms_file" ] || exit 0
+[ -r "$PERMS_FILE" ] || exit 0
 
 trim () { for i in "$@"; do echo -n " $i"; done | grep -o '[^[:space:]].*' | grep -o '.*[^[:space:]]'; }
 
@@ -48,4 +48,4 @@ while IFS=: read user perms key; do
 		fi
 		printf 'command="cd /srv/hg && hg-ssh %b" %s -- %s\n' "$perms" "$(trim "$key")" "$user"
 	fi
-done < "$perms_file"
+done < "$PERMS_FILE"

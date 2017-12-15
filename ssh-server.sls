@@ -46,12 +46,10 @@ mercurial-ssh-auth-script:
 
 mercurial-ssh-auth-template:
   file.managed:
-    - name: /var/lib/hg/permissions
+    - name: /etc/mercurial/server-perms.conf
     - contents: |
         # Format:
         #     <user>:<repos>:<key>
-        # See /usr/local/lib/hg/authorized_keys_handler.sh for detailed documentation.
-    - user: hg
-    - group: hg
+        # See /usr/local/lib/hg/authorized_keys_handler.sh for more information.
     - mode: 644
     - replace: false
