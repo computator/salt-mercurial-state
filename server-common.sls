@@ -25,6 +25,6 @@ mercurial-srv-root:
   file.directory:
     - name: /srv/hg
     - group: hg
-    - mode: 3775
+    - mode: 3777
     - require:
       - user: mercurial-user
