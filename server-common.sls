@@ -1,10 +1,11 @@
+include:
+  - mercurial
+
 mercurial-user:
   user.present:
     - name: hg
     - gid_from_name: true
-    - remove_groups: false
     - home: /var/lib/hg
-    - enforce_password: false
     - system: true
 
 mercurial-trust-group:
@@ -23,8 +24,7 @@ mercurial-trust-group:
 mercurial-srv-root:
   file.directory:
     - name: /srv/hg
-    - user: hg
     - group: hg
-    - mode: 3777
+    - mode: 3775
     - require:
       - user: mercurial-user
