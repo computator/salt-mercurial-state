@@ -21,6 +21,7 @@
 # Blank lines and lines starting with a '#' are ignored.
 # 
 
+SSH_HANDLER="/usr/local/lib/hg/ssh_connection_handler.py"
 PERMS_FILE="/etc/mercurial/server-perms.conf"
 
 [ -r "$PERMS_FILE" ] || exit 0
@@ -46,6 +47,6 @@ while IFS=: read user perms key; do
 		if [ -n "$global_perms" ]; then
 			perms="$global_perms $perms"
 		fi
-		printf 'command="cd /srv/hg && hg-ssh %b" %s -- %s\n' "$perms" "$(trim "$key")" "$user"
+		printf 'command="cd /srv/hg && %s %b" %s -- %s\n' "$SSH_HANDLER" "$perms" "$(trim "$key")" "$user"
 	fi
 done < "$PERMS_FILE"

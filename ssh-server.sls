@@ -44,6 +44,13 @@ mercurial-ssh-auth-script:
     - mode: 755
     - makedirs: true
 
+mercurial-ssh-handler-script:
+  file.managed:
+    - name: /usr/local/lib/hg/ssh_connection_handler.py
+    - source: salt://mercurial/ssh_handler.py
+    - mode: 755
+    - makedirs: true
+
 mercurial-ssh-auth-template:
   file.managed:
     - name: /etc/mercurial/server-perms.conf
