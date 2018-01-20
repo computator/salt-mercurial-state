@@ -38,12 +38,12 @@ while IFS=: read user perms key; do
 	[ "$(printf '%c' "$user")" != "#" ] || continue
 	if [ "$user" = "*" ]; then
 		if [ -z "$global_perms" ]; then
-			global_perms="$(trim "$perms")"
+			global_perms=$(trim "$perms")
 		else
 			global_perms="$global_perms $(trim "$perms")"
 		fi
 	else
-		perms="$(trim "$perms")"
+		perms=$(trim "$perms")
 		if [ -n "$global_perms" ]; then
 			perms="$global_perms $perms"
 		fi
