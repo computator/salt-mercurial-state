@@ -29,6 +29,7 @@ PERMS_FILE="/etc/mercurial/server-perms.conf"
 
 trim () { echo "$@" | grep -o '[^[:space:]]\(.*[^[:space:]]\)\?'; }
 escape () { for i in "$@"; do printf "'%s' " "$(printf %s "$i" | sed "s/'/'\\\''/g")"; done | head -c -1; }
+splitstr () { local -; set -f; set -- $@; escape "$@"; }
 
 # die gracefully when we are killed with SIGPIPE once the key is found
 trap "exit 0" PIPE
@@ -50,9 +51,7 @@ while IFS=: read user perms key; do
 			perms="$global_perms $perms"
 		fi
 		if [ $ESCAPE_ARGS -gt 0 ]; then
-			# don't put quotes around $perms when passing
-			# to escape so that word splitting is done
-			perms=$(escape $perms)
+			perms=$(splitstr "$perms")
 		fi
 		printf 'command="cd /srv/hg && %s %s" %s -- %s\n' "$SSH_HANDLER" "$perms" "$(trim "$key")" "$user"
 	fi
