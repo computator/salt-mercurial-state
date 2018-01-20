@@ -26,7 +26,7 @@ PERMS_FILE="/etc/mercurial/server-perms.conf"
 
 [ -r "$PERMS_FILE" ] || exit 0
 
-trim () { for i in "$@"; do echo -n " $i"; done | grep -o '[^[:space:]].*' | grep -o '.*[^[:space:]]'; }
+trim () { echo "$@" | grep -o '[^[:space:]]\(.*[^[:space:]]\)\?'; }
 
 # die gracefully when we are killed with SIGPIPE once the key is found
 trap "exit 0" PIPE
