@@ -22,11 +22,13 @@
 # 
 
 SSH_HANDLER="/usr/local/lib/hg/ssh_connection_handler.py"
+ESCAPE_ARGS=0
 PERMS_FILE="/etc/mercurial/server-perms.conf"
 
 [ -r "$PERMS_FILE" ] || exit 0
 
 trim () { echo "$@" | grep -o '[^[:space:]]\(.*[^[:space:]]\)\?'; }
+escape () { for i in "$@"; do printf "'%s' " "$(printf %s "$i" | sed "s/'/'\\\''/g")"; done | head -c -1; }
 
 # die gracefully when we are killed with SIGPIPE once the key is found
 trap "exit 0" PIPE
@@ -47,6 +49,11 @@ while IFS=: read user perms key; do
 		if [ -n "$global_perms" ]; then
 			perms="$global_perms $perms"
 		fi
-		printf 'command="cd /srv/hg && %s %b" %s -- %s\n' "$SSH_HANDLER" "$perms" "$(trim "$key")" "$user"
+		if [ $ESCAPE_ARGS -gt 0 ]; then
+			# don't put quotes around $perms when passing
+			# to escape so that word splitting is done
+			perms=$(escape $perms)
+		fi
+		printf 'command="cd /srv/hg && %s %s" %s -- %s\n' "$SSH_HANDLER" "$perms" "$(trim "$key")" "$user"
 	fi
 done < "$PERMS_FILE"
