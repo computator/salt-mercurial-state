@@ -53,6 +53,18 @@ def main():
         else:
             sys.stderr.write('Illegal repository "%s"\n' % repo)
             sys.exit(255)
+    elif len(cmdargv) == 3 and cmdargv[:2] == ['hg', 'init']:
+        path = cmdargv[2]
+        repo = os.path.normpath(os.path.join(cwd, os.path.expanduser(path)))
+        if not readonly and next((True for patt in allowed_paths
+                                  if fnmatch.fnmatch(repo, patt)),
+                                 False):
+            cmd = ['init', repo]
+            req = dispatch.request(cmd)
+            dispatch.dispatch(req)
+        else:
+            sys.stderr.write('Permission denied "%s"\n' % repo)
+            sys.exit(255)
     else:
         sys.stderr.write('Illegal command "%s"\n' % orig_cmd)
         sys.exit(255)
