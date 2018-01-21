@@ -1,33 +1,5 @@
-#! /usr/bin/python
-#
-# Copyright 2005-2007 by Intevation GmbH <intevation@intevation.de>
-#
-# Author(s):
-# Thomas Arendsen Hein <thomas@intevation.de>
-#
-# This software may be used and distributed according to the terms of the
-# GNU General Public License version 2 or any later version.
+#!/usr/bin/python
 
-"""
-hg-ssh - a wrapper for ssh access to a limited set of mercurial repos
-
-To be used in ~/.ssh/authorized_keys with the "command" option, see sshd(8):
-command="hg-ssh path/to/repo1 /path/to/repo2 ~/repo3 ~user/repo4" ssh-dss ...
-(probably together with these other useful options:
- no-port-forwarding,no-X11-forwarding,no-agent-forwarding)
-
-This allows pull/push over ssh from/to the repositories given as arguments.
-
-If all your repositories are subdirectories of a common directory, you can
-allow shorter paths with:
-command="cd path/to/my/repositories && hg-ssh repo1 subdir/repo2"
-
-You can use pattern matching of your normal shell, e.g.:
-command="cd repos && hg-ssh user/thomas/* projects/{mercurial,foo}"
-
-You can also add a --read-only flag to allow read-only access to a key, e.g.:
-command="hg-ssh --read-only repos/*"
-"""
 from __future__ import absolute_import
 
 import os
