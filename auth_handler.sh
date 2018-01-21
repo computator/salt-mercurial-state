@@ -22,7 +22,7 @@
 # 
 
 SSH_HANDLER="/usr/local/lib/hg/ssh_connection_handler.py"
-ESCAPE_ARGS=0
+ESCAPE_ARGS=1
 PERMS_FILE="/etc/mercurial/server-perms.conf"
 
 [ -r "$PERMS_FILE" ] || exit 0

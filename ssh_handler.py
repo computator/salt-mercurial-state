@@ -5,6 +5,7 @@ from __future__ import absolute_import
 import os
 import shlex
 import sys
+import fnmatch
 
 # enable importing on demand to reduce startup time
 import hgdemandimport ; hgdemandimport.enable()
@@ -37,7 +38,8 @@ def main():
     if cmdargv[:2] == ['hg', '-R'] and cmdargv[3:] == ['serve', '--stdio']:
         path = cmdargv[2]
         repo = os.path.normpath(os.path.join(cwd, os.path.expanduser(path)))
-        if repo in allowed_paths:
+        if next((True for patt in allowed_paths if fnmatch.fnmatch(repo, patt)),
+                False) and os.path.isdir(os.path.join(repo, '.hg')):
             cmd = ['-R', repo, 'serve', '--stdio']
             req = dispatch.request(cmd)
             if readonly:
