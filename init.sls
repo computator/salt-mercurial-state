@@ -6,8 +6,8 @@ mercurial:
     - baseurl: https://www.mercurial-scm.org/release/centos$releasever
     - gpgcheck: 0
     {% endif %}
-    - unless: 'pip --disable-pip-version-check show hg-git | grep -qF "Installer: pip"'
+    - unless: 'pip --disable-pip-version-check show mercurial | grep -qF "Installer: pip"'
     - require_in:
       - pkg: mercurial
   pkg.installed:
-    - unless: 'pip --disable-pip-version-check show hg-git | grep -qF "Installer: pip"'
+    - unless: 'pip --disable-pip-version-check show mercurial | grep -qF "Installer: pip"'
