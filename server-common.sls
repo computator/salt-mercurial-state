@@ -4,7 +4,9 @@ include:
 mercurial-user:
   user.present:
     - name: hg
-    - gid_from_name: true
+    {% if grains['saltversioninfo'][0] > 2018 %}
+    - usergroup: true
+    {% endif %}
     - home: /var/lib/hg
     - system: true
 

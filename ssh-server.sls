@@ -59,4 +59,5 @@ mercurial-ssh-auth-template:
         #     <user>:<repos>:<key>
         # See /usr/local/lib/hg/authorized_keys_handler.sh for more information.
     - mode: 644
+    - makedirs: true
     - replace: false
